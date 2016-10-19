@@ -1,0 +1,1 @@
+Site no qual voce escolhe um dos gatos da lista na direita para aparecer a sua foto na area da esquerda. Se voce clicar na foto, aparece a contagem individual de cliques em cada gato.
