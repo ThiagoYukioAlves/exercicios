@@ -17,32 +17,69 @@ var model = {
 
 	addCat: function(name, imgSrc){
 		catsArray.append(new catObject(name, imgSrc));
-	}
+	},
+
 };
 
-model.init();
+
 //model.addCat("Leao", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGA07VZae-o7s0mBgMB0cwv4g-GtcJR52wjEjcoEbHnEAHbMdWR1zvnOk");
+var view = {
+	init: function(){
+		displayView.init();
+		listView.init();
+	},
 
-for(var i = 0; i < catsArray.length; i++){
-	var list = document.getElementById("catsList");
-	var listItem = document.createElement("li");
-	listItem.textContent = catsArray[i].name;
+	displayView: {
+		init: function(){
+			document.getElementById("catsName").textContent = "Click on a cat on the list!!";
+		},
 
+		render: function(){
 
+		}
+	},
 
-	listItem.addEventListener('click', (function(iCopy){
-		return function(){
-			document.getElementById('catsName').textContent = catsArray[iCopy].name;
-			document.getElementById('catsImage').src = catsArray[iCopy].imgSrc;
-			catShowed = iCopy;
-			document.getElementById("count").textContent = ("This cat was clicked " + (catsArray[catShowed].clickCount) + " times!!");
+	listView: {
+		init: function(){
+			catsArray = controller.getCatsArray();
+			for(var i = 0; i < catsArray.length; i++){
+				listView.addCat(catsArray[i]);
+			}
+		},
 
-		};
-	})(i));
+		addCat: function(cat){
+			var list = document.getElementById("catsList");
+			var listItem = document.createElement("li");
+			listItem.textContent = cat.name;
 
-	list.appendChild(listItem);
-}			
+			listView.addClickListener(cat, listItem);
+
+			list.appendChild(listItem);
+		},
+
+		addClickListener: function(cat, listItem){
+			listItem.addEventListener('click', function(){
+				document.getElementById('catsName').textContent = cat.name;
+				document.getElementById('catsImage').src = cat.imgSrc;
+				document.getElementById("count").textContent = ("This cat was clicked " + (controller.getClickCount(cat)) + " times!!");
+			});
+		}
+	}
+};
+			
 
 document.getElementById('catsImage').addEventListener('click', function(){
 	document.getElementById("count").textContent = ("This cat was clicked " + (++(catsArray[catShowed].clickCount)) + " times!!");
 });
+
+
+var controller = {
+	init: function(){
+		model.init();
+		view.init();
+	},
+
+	getClickCount: function(cat){
+		return cat.clickCount;
+	}
+};
