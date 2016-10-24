@@ -6,7 +6,6 @@ var model = {
 			this.clickCount = 0; 
 		}
 
-		var catShowed = 0;
 
 		var catsArray = [new catObject("Burrito", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQASlEv3pALbLaKU8Q4Fou4GfBUxiXJ0RMwKkU7oFn6uDfwev66ABPP6Pc"),
 			new catObject("Marceline", "https://s-media-cache-ak0.pinimg.com/236x/bd/06/21/bd0621cfdf4cf49def9bfa9a3446df07.jpg"),
@@ -19,6 +18,19 @@ var model = {
 		catsArray.append(new catObject(name, imgSrc));
 	},
 
+	catWasClicked: function(cat){
+		cat.clickCount++;
+	},
+
+	getClickCount: function(cat){
+		return cat.clickCount;
+	},
+
+	getImgSrc: function(cat){
+		return cat.imgSrc;
+	}
+
+
 };
 
 
@@ -30,19 +42,31 @@ var view = {
 	},
 
 	displayView: {
+		catShowed: 0,
+
 		init: function(){
 			document.getElementById("catsName").textContent = "Click on a cat on the list!!";
+			displayView.catShowed = 0;
 		},
 
 		render: function(){
+			document.getElementById('catsName').textContent = cat.name;
+			document.getElementById('catsImage').src = cat.imgSrc;
+			document.getElementById("count").textContent = ("This cat was clicked " + (controller.getClickCount(cat)) + " times!!");
+		},
 
+		addClickListener: function(){
+			document.getElementById('catsImage').addEventListener('click', function(){
+				document.getElementById("count").textContent = ("This cat was clicked " + (++(catsArray[catShowed].clickCount)) + " times!!");
+			});
 		}
 	},
 
 	listView: {
 		init: function(){
-			catsArray = controller.getCatsArray();
-			for(var i = 0; i < catsArray.length; i++){
+			var numberOfCats = controller.howManyCats();
+			
+			for(var i = 0; i < numberOfCats; i++){
 				listView.addCat(catsArray[i]);
 			}
 		},
@@ -59,18 +83,12 @@ var view = {
 
 		addClickListener: function(cat, listItem){
 			listItem.addEventListener('click', function(){
-				document.getElementById('catsName').textContent = cat.name;
-				document.getElementById('catsImage').src = cat.imgSrc;
-				document.getElementById("count").textContent = ("This cat was clicked " + (controller.getClickCount(cat)) + " times!!");
+				controller.setCat(cat);
 			});
 		}
 	}
 };
 			
-
-document.getElementById('catsImage').addEventListener('click', function(){
-	document.getElementById("count").textContent = ("This cat was clicked " + (++(catsArray[catShowed].clickCount)) + " times!!");
-});
 
 
 var controller = {
@@ -80,6 +98,11 @@ var controller = {
 	},
 
 	getClickCount: function(cat){
-		return cat.clickCount;
-	}
+		return model.getClickCount(cat);
+	},
+
+	howManyCats: function(){
+		return model.catsArray.length;
+	},
+
 };
