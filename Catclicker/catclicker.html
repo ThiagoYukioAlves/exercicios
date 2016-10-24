@@ -1,66 +1,29 @@
 <!DOCTYPE HTML>
 
-<html>
+<html lang="en">
 	<head>
-		<h1 style="text-align: center;">Cat clicker game!</h1>
+		<title>Cat Clicker game!</title>
+		<link rel="stylesheet" href="css/style.css">
 	</head>
 	<body>
-		<h3 style="text-align: center;">Choose your cat from the list and click it!!</h3>
+		<h1>Cat clicker game!</h1>
+		<h3>Choose your cat from the list and click it!!</h3>
 		
 		<!-- Foto do gato -->
-		<div style="width:60%; height:500px; float:left; border: 2px solid red;">
-			<p id="catsName" style="font-size: 200%; text-align: center;">Click on a cat on the list!!</p>
-			<img id="catsImage" src="" style="height: 350px; margin: auto; display: block;">
-			<p id="count" style="text-align: center;"></p>
+		<div id="catsPictureContainer">
+			<p id="catsName">Click on a cat on the list!!</p>
+			<img id="catsImage" src="">
+			<p id="count"></p>
 		</div>
 
 		<!-- Lista -->
-		<div style="width: 30%; float: right; border: 2px solid blue;">
+		<div id="catsListContainer">
 			<p>List of Cats!</p>
 			<ul id="catsList">
 			</ul>
 		</div>
 
 
-		<script type="text/javascript">
-			function catObject(name, imgSrc){
-				this.name = name;
-				this.imgSrc = imgSrc;
-				this.clickCount = 0; 
-			}
-			var catShowed = 0;
-
-			var catsArray = [new catObject("Burrito", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQASlEv3pALbLaKU8Q4Fou4GfBUxiXJ0RMwKkU7oFn6uDfwev66ABPP6Pc"),
-							new catObject("Marceline", "https://s-media-cache-ak0.pinimg.com/236x/bd/06/21/bd0621cfdf4cf49def9bfa9a3446df07.jpg"),
-							new catObject("Hari", "https://i.ytimg.com/vi/Dnx0z1cC8u8/maxresdefault.jpg"),
-							new catObject("Chato", "https://pbs.twimg.com/profile_images/616542814319415296/McCTpH_E.jpg")
-							];
-			
-
-			for(var i = 0; i < catsArray.length; i++){
-				var list = document.getElementById("catsList");
-				var listItem = document.createElement("li");
-				listItem.textContent = catsArray[i].name;
-				
-
-
-				listItem.addEventListener('click', (function(iCopy){
-					return function(){
-						document.getElementById('catsName').textContent = catsArray[iCopy].name;
-						document.getElementById('catsImage').src = catsArray[iCopy].imgSrc;
-						catShowed = iCopy;
-						document.getElementById("count").textContent = ("This cat was clicked " + (catsArray[catShowed].clickCount) + " times!!");
-						
-					};
-				})(i));
-
-				list.appendChild(listItem);
-			}			
-
-			document.getElementById('catsImage').addEventListener('click', function(){
-						document.getElementById("count").textContent = ("This cat was clicked " + (++(catsArray[catShowed].clickCount)) + " times!!");
-			});
-
-		</script>
+		<script type="text/javascript" src="js/app.js"></script>
 	</body>
 </html>

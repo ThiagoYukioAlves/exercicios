@@ -1,0 +1,32 @@
+*{
+	text-align: center;
+}
+
+li{
+	text-align: left;
+}
+
+#catsName{
+	font-size: 200%; 
+	text-align: center;
+}
+
+#catsImage{
+	height: 350px;
+	margin: auto;
+	display: block;
+}
+
+#catsListContainer{
+	width: 30%; 
+	float: right; 
+	border: 2px solid blue;	
+	background-color: green;
+}
+
+#catsPictureContainer{
+	width:60%; 
+	height:500px; 
+	float:left; 
+	border: 2px solid red;"
+}
