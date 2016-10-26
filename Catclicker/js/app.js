@@ -8,7 +8,7 @@ var model = {
 	init: function(){
 		this.catsArray = [new this.catObject("Burrito", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQASlEv3pALbLaKU8Q4Fou4GfBUxiXJ0RMwKkU7oFn6uDfwev66ABPP6Pc"),
 			new this.catObject("Marceline", "https://s-media-cache-ak0.pinimg.com/236x/bd/06/21/bd0621cfdf4cf49def9bfa9a3446df07.jpg"),
-			new this.catObject("Hari", "https://i.ytimg.com/vi/Dnx0z1cC8u8/maxresdefault.jpg"),
+			new this.catObject("Hari", "http://www.animale.me/wp-content/uploads/2012/08/gato-bengal.jpg"),
 			new this.catObject("Chato", "https://pbs.twimg.com/profile_images/616542814319415296/McCTpH_E.jpg")
 		];
 	},
@@ -42,14 +42,14 @@ var view = {
 	},
 
 	display: {
-		catShowed: 0,
+		catShowed: null,
 
 		init: function(){
 			document.getElementById("catsName").textContent = "Click on a cat on the list!!";
-			this.catShowed = 0;  
+			this.catShowed = null;  
 
 			document.getElementById('catsImage').addEventListener('click', function(){
-				if(catShowed !== 0){
+				if(this.catShowed !== null){
 					controller.catWasClicked();
 				}
 			});
@@ -59,7 +59,7 @@ var view = {
 		render: function(){
 			document.getElementById('catsName').textContent = this.catShowed.name;
 			document.getElementById('catsImage').src = this.catShowed.imgSrc;
-			document.getElementById("count").textContent = ("This cat was clicked " + (controller.getClickCount()) + " times!!");
+			document.getElementById('count').textContent = ("This cat was clicked " + (controller.getClickCount()) + " times!!");
 		},
 
 		changeCatSelection: function(newCat){
@@ -104,12 +104,12 @@ var controller = {
 
 	// Funcao para a view pegar o numero de clicks do model
 	getClickCount: function(){
-		return model.getClickCount(view.catShowed);
+		return model.getClickCount(view.display.catShowed);
 	},
 
 	// Funcao para a display avisa o model que o gato foi clicado
 	catWasClicked: function(){
-		model.catWasClicked(view.catShowed);
+		model.catWasClicked(view.display.catShowed);
 		view.display.render();
 	},
 
