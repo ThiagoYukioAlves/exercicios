@@ -57,8 +57,8 @@ var view = {
 		},
 
 		render: function(){
-			document.getElementById('catsName').textContent = catShowed.name;
-			document.getElementById('catsImage').src = catShowed.imgSrc;
+			document.getElementById('catsName').textContent = this.catShowed.name;
+			document.getElementById('catsImage').src = this.catShowed.imgSrc;
 			document.getElementById("count").textContent = ("This cat was clicked " + (controller.getClickCount()) + " times!!");
 		},
 
