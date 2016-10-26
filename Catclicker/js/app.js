@@ -47,26 +47,32 @@ var view = {
 		init: function(){
 			document.getElementById("catsName").textContent = "Click on a cat on the list!!";
 			displayView.catShowed = 0;
+
+			document.getElementById('catsImage').addEventListener('click', function(){
+				if(catShowed !== 0){
+					controller.catWasClicked();
+				}
+			});
+
 		},
 
 		render: function(){
-			document.getElementById('catsName').textContent = cat.name;
-			document.getElementById('catsImage').src = cat.imgSrc;
-			document.getElementById("count").textContent = ("This cat was clicked " + (controller.getClickCount(cat)) + " times!!");
+			document.getElementById('catsName').textContent = catShowed.name;
+			document.getElementById('catsImage').src = catShowed.imgSrc;
+			document.getElementById("count").textContent = ("This cat was clicked " + (controller.getClickCount()) + " times!!");
 		},
 
-		addClickListener: function(){
-			document.getElementById('catsImage').addEventListener('click', function(){
-				document.getElementById("count").textContent = ("This cat was clicked " + (++(catsArray[catShowed].clickCount)) + " times!!");
-			});
-		}
+		changeCatSelection: function(newCat){
+			displayView.catShowed = newCat;
+			displayView.render();
+		},
 	},
 
 	listView: {
 		init: function(){
-			var numberOfCats = controller.howManyCats();
+			var catsArray = controller.getCatsArray();
 			
-			for(var i = 0; i < numberOfCats; i++){
+			for(var i = 0; i < catsArray.length; i++){
 				listView.addCat(catsArray[i]);
 			}
 		},
@@ -83,7 +89,7 @@ var view = {
 
 		addClickListener: function(cat, listItem){
 			listItem.addEventListener('click', function(){
-				controller.setCat(cat);
+				displayView.changeCatSelection(cat);
 			});
 		}
 	}
@@ -97,12 +103,17 @@ var controller = {
 		view.init();
 	},
 
-	getClickCount: function(cat){
-		return model.getClickCount(cat);
+	getClickCount: function(){
+		return model.getClickCount(view.catShowed);
 	},
 
-	howManyCats: function(){
-		return model.catsArray.length;
+	catWasClicked: function(){
+		model.catWasClicked(view.catShowed);
+		displayView.render();
+	},
+
+	getCatsArray: function(){
+		return model.catsArray;
 	},
 
 };
