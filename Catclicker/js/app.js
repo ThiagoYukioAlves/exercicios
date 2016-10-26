@@ -1,21 +1,22 @@
 var model = {
+	catObject: function(name, imgSrc){
+		this.name = name;
+		this.imgSrc = imgSrc;
+		this.clickCount = 0; 
+	},
+
 	init: function(){
-		function catObject(name, imgSrc){
-			this.name = name;
-			this.imgSrc = imgSrc;
-			this.clickCount = 0; 
-		}
-
-
-		this.catsArray = [new catObject("Burrito", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQASlEv3pALbLaKU8Q4Fou4GfBUxiXJ0RMwKkU7oFn6uDfwev66ABPP6Pc"),
-			new catObject("Marceline", "https://s-media-cache-ak0.pinimg.com/236x/bd/06/21/bd0621cfdf4cf49def9bfa9a3446df07.jpg"),
-			new catObject("Hari", "https://i.ytimg.com/vi/Dnx0z1cC8u8/maxresdefault.jpg"),
-			new catObject("Chato", "https://pbs.twimg.com/profile_images/616542814319415296/McCTpH_E.jpg")
+		this.catsArray = [new this.catObject("Burrito", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQASlEv3pALbLaKU8Q4Fou4GfBUxiXJ0RMwKkU7oFn6uDfwev66ABPP6Pc"),
+			new this.catObject("Marceline", "https://s-media-cache-ak0.pinimg.com/236x/bd/06/21/bd0621cfdf4cf49def9bfa9a3446df07.jpg"),
+			new this.catObject("Hari", "https://i.ytimg.com/vi/Dnx0z1cC8u8/maxresdefault.jpg"),
+			new this.catObject("Chato", "https://pbs.twimg.com/profile_images/616542814319415296/McCTpH_E.jpg")
 		];
 	},
 
 	addCat: function(name, imgSrc){
-		catsArray.append(new catObject(name, imgSrc));
+		var cat = new this.catObject(name, imgSrc);
+		this.catsArray.push(cat);
+		controller.catWasAdded(cat);
 	},
 
 	catWasClicked: function(cat){
@@ -34,7 +35,6 @@ var model = {
 };
 
 
-//model.addCat("Leao", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGA07VZae-o7s0mBgMB0cwv4g-GtcJR52wjEjcoEbHnEAHbMdWR1zvnOk");
 var view = {
 	init: function(){
 		this.display.init();
@@ -116,8 +116,14 @@ var controller = {
 	getCatsArray: function(){
 		return model.catsArray;
 	},
+
+	catWasAdded: function(cat){
+		view.list.addCat(cat);
+	},
 };
 
 
 // Inicializa o app
 controller.init();
+
+model.addCat("Leao", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGA07VZae-o7s0mBgMB0cwv4g-GtcJR52wjEjcoEbHnEAHbMdWR1zvnOk");
