@@ -63,7 +63,7 @@ var view = {
 				this.render();
 			});
 
-			// Adiciona listener caso o cancel seja pressionado
+			//Adiciona listener caso o cancel seja pressionado
 			document.getElementById("formCancel").addEventListener('click', function(){
 				button.style.display = "block";
 				area.style.display = "none";
@@ -75,7 +75,9 @@ var view = {
 				var newImg = document.getElementById("formImg").value;
 				var newClicks = document.getElementById("formClicks").value;
 
+				// Da update das informacoes
 				controller.updateCatInfo(newName, newImg, newClicks);
+
 			});
 
 		},
