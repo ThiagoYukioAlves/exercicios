@@ -29,8 +29,13 @@ var model = {
 
 	getImgSrc: function(cat){
 		return cat.imgSrc;
-	}
+	},
 
+	updateCatInfo: function(cat, newName, newImg, newClicks){
+		cat.name = newName;
+		cat.imgSrc = newImg;
+		cat.clickCount = newClicks;
+	},
 
 };
 
@@ -39,7 +44,51 @@ var view = {
 	init: function(){
 		this.display.init();
 		this.list.init();
+		this.adminArea.init();
 	},
+
+	adminArea: {
+		init: function(){
+			var button = document.getElementById("adminButton");
+			var area = document.getElementById("adminArea");
+
+			// Inicializa com botao visivel e painel invisivel
+			button.style.display = "block";
+			area.style.display = "none";
+
+			// Adiciona listener caso o botao de admin seja pressionado
+			button.addEventListener('click', function(){
+				button.style.display = "none";
+				area.style.display = "block";
+				this.render();
+			});
+
+			// Adiciona listener caso o cancel seja pressionado
+			document.getElementById("formCancel").addEventListener('click', function(){
+				button.style.display = "block";
+				area.style.display = "none";
+			});
+
+			// Adiciona listener caso o submit seja pressionado
+			document.getElementById("formChange").addEventListener('click', function(){
+				var newName = document.getElementById("formName").value;
+				var newImg = document.getElementById("formImg").value;
+				var newClicks = document.getElementById("formClicks").value;
+
+				controller.updateCatInfo(newName, newImg, newClicks);
+			});
+
+		},
+
+		render: function(){
+			if(view.display.catShowed !== null){
+				document.getElementById("formName").value = view.display.catShowed.name;
+				document.getElementById("formImg").value = view.display.catShowed.imgSrc;
+				document.getElementById("formClicks").value = view.display.catShowed.clickCount;
+			}
+		},
+	},
+
 
 	display: {
 		catShowed: null,
@@ -51,6 +100,7 @@ var view = {
 			document.getElementById('catsImage').addEventListener('click', function(){
 				if(this.catShowed !== null){
 					controller.catWasClicked();
+					view.adminArea.render();
 				}
 			});
 
@@ -89,6 +139,7 @@ var view = {
 		addClickListener: function(cat, listItem){
 			listItem.addEventListener('click', function(){
 				view.display.changeCatSelection(cat);
+				view.adminArea.render();
 			});
 		}
 	}
@@ -119,6 +170,11 @@ var controller = {
 
 	catWasAdded: function(cat){
 		view.list.addCat(cat);
+	},
+
+	updateCatInfo: function(name, imgSrc, clicksNumber){
+		model.updateCatInfo(view.display.catShowed, name, imgSrc, clicksNumber);
+		view.display.render();
 	},
 };
 
