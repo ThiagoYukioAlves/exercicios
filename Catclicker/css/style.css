@@ -36,11 +36,18 @@ input{
 }
 
 #adminArea{
-	width: 30%; 
+	width: 20%; 
 	float: right; 
 	margin-top: 100px;
 	border: 2px solid #00CD00;
 	color: #00CD00;	
 	background-color: black;	
 	padding: 10px;
+}
+
+#adminButton{
+	float: right;
+	border: 2px solid black;
+	margin-right: 10%;
+	margin-top: 20px;
 }
